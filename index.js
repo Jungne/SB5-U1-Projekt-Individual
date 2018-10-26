@@ -5,8 +5,10 @@ const port = 3000;
 
 app.use(express.static('public'));
 
-app.get('/test', function (req, res) {
+//Routes
+app.get('/hello', function (req, res) {
   res.send("hello");
 })
 
+//Starts the server
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
