@@ -38,19 +38,7 @@ time, mark, audio, video
 #top-bar .button {
   margin-top: 10px;
   margin-right: 10px;
-	width: 80px;
-	height: 30px;
-	line-height: 30px;
 	float: right;
-	background-color: red;
-	text-align: center;
-	cursor: pointer;
-	-moz-user-select: none; /* Firefox */
-	user-select: none;
-}
-
-#top-bar .button:hover {
-	background-color: yellow;
 }
 
 #bottom-bar {
@@ -75,4 +63,19 @@ time, mark, audio, video
 	min-width: 600px;
 	min-height: 300px;
 	background-color: lightblue;
+}
+
+.button {
+	width: 80px;
+	height: 30px;
+	line-height: 30px;
+	background-color: red;
+	text-align: center;
+	cursor: pointer;
+	-moz-user-select: none; /* Firefox */
+	user-select: none;
+}
+
+.button:hover {
+	background-color: yellow;
 }
