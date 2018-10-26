@@ -1,0 +1,30 @@
+#signup-form > h1 {
+  text-align: center;
+  width: 100%;
+  font-size: 32px;
+  padding-top: 20px;
+  padding-bottom: 30px;
+}
+
+.form-row {
+  display: flex;
+  width: 90%;
+  margin: auto;
+  padding: 5px;
+}
+
+.form-row > p {
+  flex: 1;
+}
+
+.form-row > input {
+  flex: 3;
+}
+
+.form-row > .button {
+  margin-right: 20px;
+}
+
+#sign-up-button {
+  margin-left: 40%;
+}
