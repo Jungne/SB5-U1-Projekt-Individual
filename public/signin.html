@@ -4,20 +4,14 @@
 <head>
     <meta charset="utf-8">
     <title>Login</title>
+    <link rel="stylesheet" type="text/css" href="styles.css" />
+    <script src="main.js"></script>
 </head>
 
 <body>
-
-    <p>I love the sun!</p>
-    <hr/>
-    <div>Please write your login and password and press the button to log in
-	   <br/>Login: <input type="text" id="login" value="">
-	   <br/>Password: <input type="text" id="password" value="">
-	   <button type="button" id="log-in-button">[Log in]</button>
-    </div>
-    <hr/>
+    
 <script>
-// it will hold the data about cars
+// it will hold the data about users
 window.onload = function() {
 	localStorage.setItem("username", "abc");
 	localStorage.setItem("password", "123");
@@ -54,7 +48,18 @@ window.onload = function() {
 	
 };
 </script>	
-	
+ <div id="top-bar">
+        <h1>Log in</h1>
+    </div>
+    <div id="bottom-bar">
+        <h1>bottom</h1>
+    </div>
+    <div id="container-main">
+        <p>Please write your login and password and press the button to log in</p>
+		<br/>Login: <input type="text" id="login" value="">
+	   <br/>Password: <input type="text" id="password" value="">
+	   <button type="button" id="log-in-button">[Log in]</button>
+    </div>
 </body>
 
 </html>
