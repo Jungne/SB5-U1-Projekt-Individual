@@ -1,0 +1,21 @@
+.form-row {
+  display: flex;
+  width: 90%;
+  margin: auto;
+  padding: 5px;
+}
+
+.form-row > p {
+  flex: 1;
+}
+
+.form-row > input {
+  flex: 3;
+}
+
+.form-row > .button {
+  margin-right: 20px;
+}
+.form-row > .action {
+  margin-right: 20px;
+}

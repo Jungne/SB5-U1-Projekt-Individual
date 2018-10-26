@@ -5,62 +5,13 @@
     <meta charset="utf-8">
     <title>Login</title>
     <link rel="stylesheet" type="text/css" href="styles.css" />
-    <script src="main.js"></script>
+	<link rel="stylesheet" type="text/css" href="signin.css" />
+    <script src="signin.js"></script>
 </head>
 
 <body>
     
-<script>
-// it will hold the data about users
-window.onload = function() {
-	let usersArray= [];
-	let login = document.getElementById("log-in-button");
-			let username = document.getElementById("login").value;
-		let password = document.getElementById("password").value;
-	updateUsersFromDB();
-	login.addEventListener("click",function(){
-		
-		debugger;
-		//should we call a webservice here ? is better :)
-		if(isLoginAndPasswordGreat()==true)
-		{
-			//goto index.html
-			alert("Du er nu logget ind");
-			window.location.href = "index.html"; // uden domæne opsat.
-			//window.location.href = "/index.html"; // bedst med domæne opsat.
-		}
-		else
-		{
-			//output error
-			alert("Forkert login");
-		}
-	});
-	function isLoginAndPasswordGreat()
-	{
-		let username = document.getElementById("login").value;
-		let password = document.getElementById("password").value;
-		user = usersArray.find(x => x.username == username)
-		if(user!=null && user.password == password ){
-		return true;
-		}
-		return false;
-	}
-	function updateUsersFromDB()
-	{
-	fetch("http://localhost:5000/getUsers")
-	.then((response)=>response.json())
-	.then(function(users){
-	for(let user in users){
-	usersArray.push( {"username":user,"password":users[user].password});
-	}
-	
-	
-	})
-	}
 
-	
-};
-</script>
  <div id="top-bar">
         <h1>Log in</h1>
     </div>
@@ -72,6 +23,9 @@ window.onload = function() {
 		<br/>Login: <input type="text" id="login" value="">
 	   <br/>Password: <input type="text" id="password" value="">
 	   <button type="button" id="log-in-button">[Log in]</button>
+	   <form action="index.html">
+		<input type="submit" value="[Cancel]" />
+		</form>
     </div>
 </body>
 
