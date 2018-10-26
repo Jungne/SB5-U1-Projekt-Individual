@@ -11,6 +11,10 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 //Routes
+app.get('/', function (req, res) {
+  res.sendfile("index.html");
+})
+
 app.get('/hello', function (req, res) {
   res.send("hello dudes");
 })
