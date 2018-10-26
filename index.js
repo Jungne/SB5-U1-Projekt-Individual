@@ -17,8 +17,20 @@ app.get('/dbtest', function (req, res) {
 })
 
 app.post('/newUser', function (req, res) {
-  db.push("/users/" + req.query.username , {"password": req.query.password})
-  res.send("its all good");
+  if (req.body.username && req.body.password) {
+    db.push("/users/" + req.body.username , {"password": req.body.password})
+    res.send("its all good");
+    console.log("Created new user.")
+  }
+  else { 
+    console.log("Something went wrong.")
+  }
+  
+})
+
+app.get('/getUsers', function (req, res) {
+  res.send(db.getData("/users"));
+  console.log("List of users requested.")
 })
 
 //Starts the server
