@@ -1,7 +1,6 @@
 window.onload = function () {
   let signUpButton = document.getElementById("sign-up-button")
   signUpButton.onclick = () => {
-    console.log("Post signup request")
     const Http = new XMLHttpRequest();
     const url = '/hello';
     Http.open("GET", url);
