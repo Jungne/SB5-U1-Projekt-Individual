@@ -12,5 +12,8 @@
     "body-parser": "^1.18.3",
     "express": "^4.16.4",
     "node-json-db": "^0.9.1"
+  },
+  "engines": {
+    "node": "8.9.4"
   }
 }
