@@ -1,11 +1,14 @@
 var express = require("express")
 var app = express()
+var bodyParser = require("body-parser")
 var JsonDB = require('node-json-db')
 var db = new JsonDB("database", true, true);
 
 const port = 3000; 
 
 app.use(express.static('public'));
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
 //Routes
 app.get('/hello', function (req, res) {
@@ -17,15 +20,9 @@ app.get('/dbtest', function (req, res) {
 })
 
 app.post('/newUser', function (req, res) {
-  if (req.body.username && req.body.password) {
     db.push("/users/" + req.body.username , {"password": req.body.password})
     res.send("its all good");
     console.log("Created new user.")
-  }
-  else { 
-    console.log("Something went wrong.")
-  }
-  
 })
 
 app.get('/getUsers', function (req, res) {
