@@ -13,16 +13,16 @@
 <script>
 // it will hold the data about users
 window.onload = function() {
-	localStorage.setItem("username", "abc");
-	localStorage.setItem("password", "123");
-
+	let usersArray= [];
 	let login = document.getElementById("log-in-button");
-	login.addEventListener("click",function(){
-		debugger;
-		let username = document.getElementById("login").value;
+			let username = document.getElementById("login").value;
 		let password = document.getElementById("password").value;
+	updateUsersFromDB();
+	login.addEventListener("click",function(){
+		
+		debugger;
 		//should we call a webservice here ? is better :)
-		if(username == GetUsername() && password == GetPassword())
+		if(isLoginAndPasswordGreat()==true)
 		{
 			//goto index.html
 			alert("Du er nu logget ind");
@@ -35,19 +35,32 @@ window.onload = function() {
 			alert("Forkert login");
 		}
 	});
-	function GetUsername()
+	function isLoginAndPasswordGreat()
 	{
-		var username = localStorage.getItem("username");
-		return username;
+		let username = document.getElementById("login").value;
+		let password = document.getElementById("password").value;
+		user = usersArray.find(x => x.username == username)
+		if(user!=null && user.password == password ){
+		return true;
+		}
+		return false;
 	}
-	function GetPassword()
+	function updateUsersFromDB()
 	{
-		var password = localStorage.getItem("password");
-		return password;
+	fetch("http://localhost:5000/getUsers")
+	.then((response)=>response.json())
+	.then(function(users){
+	for(let user in users){
+	usersArray.push( {"username":user,"password":users[user].password});
 	}
 	
+	
+	})
+	}
+
+	
 };
-</script>	
+</script>
  <div id="top-bar">
         <h1>Log in</h1>
     </div>
