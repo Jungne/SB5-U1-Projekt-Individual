@@ -9,6 +9,7 @@
   "author": "Jungne Losang",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.16.4"
+    "express": "^4.16.4",
+    "node-json-db": "^0.9.1"
   }
 }
