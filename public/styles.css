@@ -20,36 +20,30 @@ time, mark, audio, video
 	vertical-align: baseline;
 }
 
+a {
+  text-decoration: none;
+  color: unset;
+}
+
 #top-bar {
 	width: 100vw;
 	height: 50px;
+	color: white;
 	background-color: green;
 	font-family: monospace;
 }
 
 #top-bar > h1 {
 	margin-left: 20px;
-    display: inline-block;
+  display: inline-block;
 	font-size: 2rem;
 	line-height: 50px;
 }
 
 #top-bar .button {
-    margin-top: 10px;
-    margin-right: 10px;
-	width: 80px;
-	height: 30px;
-	line-height: 30px;
+  margin-top: 10px;
+  margin-right: 10px;
 	float: right;
-	background-color: red;
-	text-align: center;
-	cursor: pointer;
-	-moz-user-select: none; /* Firefox */
-	user-select: none;
-}
-
-#top-bar .button:hover {
-	background-color: yellow;
 }
 
 #bottom-bar {
@@ -57,6 +51,7 @@ time, mark, audio, video
 	bottom: 0px;
 	width: 100vw;
 	height: 50px;
+	color: white;
 	background-color: green;
 }
 
@@ -64,4 +59,28 @@ time, mark, audio, video
 	font-size: 2rem;
 	font-family: monospace;
 	line-height: 50px;
+	text-align: center;
+}
+
+#container-main {
+	margin: auto;
+	width: 60vw;
+	min-width: 600px;
+	min-height: 300px;
+	background-color: lightblue;
+}
+
+.button {
+	width: 80px;
+	height: 30px;
+	line-height: 30px;
+	background-color: red;
+	text-align: center;
+	cursor: pointer;
+	-moz-user-select: none; /* Firefox */
+	user-select: none;
+}
+
+.button:hover {
+	background-color: yellow;
 }
