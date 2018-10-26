@@ -9,7 +9,7 @@ app.use(express.static('public'));
 
 //Routes
 app.get('/hello', function (req, res) {
-  res.send("hello");
+  res.send("hello dudes");
 })
 
 app.get('/dbtest', function (req, res) {
