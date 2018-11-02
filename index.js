@@ -32,7 +32,17 @@ app.post('/newUser', function (req, res) {
 app.get('/getUsers', function (req, res) {
   res.send(db.getData("/users"));
   console.log("List of users requested.")
+  log(req.ip, "List of users requested.")
 })
 
 //Starts the server
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
+
+//Function for logging data from requests
+function log(ip, desc) {
+  db.push("/logs[]", {
+    "timestamp": new Date().toISOString().replace(/T/, ' ').replace(/\..+/, ''),
+    "ip": ip,
+    "description": desc
+  })
+}
