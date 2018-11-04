@@ -6,7 +6,7 @@
     <title>Login</title>
     <link rel="stylesheet" type="text/css" href="styles.css" />
 	<link rel="stylesheet" type="text/css" href="signin.css" />
-    <script src="signin.js"></script>
+  
 </head>
 
 <body>
@@ -20,13 +20,14 @@
     </div>
     <div id="container-main">
         <p>Please write your login and password and press the button to log in</p>
+        <form action="/signin" method="POST" >
 		<div id="signin-boks">
-			<br/><div class='login-boks-label'>Login:</div> <input type="text" id="login" value="">
-			<br/><div class='login-boks-label'>Password:</div> <input type="text" id="password" value="">
+			<br/><div class='login-boks-label'>Login:</div> <input type="text" id="login" name= "username" value="">
+			<br/><div class='login-boks-label'>Password:</div> <input type="text" id="password" name="password" value="">
 		</div>
 
-	   <button type="button" id="log-in-button">[Log in]</button>
-	   <form action="index.html">
+	   <button type="submit" id="log-in-button">[Log in]</button>
+	   
 		<input type="submit" value="[Cancel]" />
 		</form>
     </div>
