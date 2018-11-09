@@ -1,14 +1,33 @@
 var express = require("express")
 var app = express()
+var http = require("http")
+var WebSocket = require("ws")
 var bodyParser = require("body-parser")
 var JsonDB = require('node-json-db')
 var db = new JsonDB("database", true, true);
 
 const port = process.env.PORT || 5000;
+const server = http.createServer(app);
+const wss = new WebSocket.Server({ server });
 
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+
+//Websocket
+wss.on('connection', (ws) => {
+
+  //connection is up, let's add a simple simple event
+  ws.on('message', (message) => {
+
+      //log the received message and send it back to the client
+      console.log('received: %s', message);
+      ws.send(`Hello, you sent -> ${message}`);
+  });
+
+  //send immediatly a feedback to the incoming connection    
+  ws.send('Hi there, I am a WebSocket server');
+});
 
 //Routes
 app.get('/', function (req, res) {
