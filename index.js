@@ -11,6 +11,7 @@ const port = process.env.PORT || 5000;
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+//from: https://www.codementor.io/mayowa.a/how-to-build-a-simple-session-based-authentication-system-with-nodejs-from-scratch-6vn67mcy3?fbclid=IwAR2uT--Fi394bUHW6YO2esKbzqCugODOZptk2Ks7fNxru-KdDhcJ7hww_z8
 app.use(cookieParser());
 app.use(session({
     key: 'user_sid',
@@ -84,16 +85,6 @@ app.route('/signin')
         		res.redirect('/signin');
         		console.log("no redirect. user not found")
         	}
-       /* User.findOne({ where: { username: username } }).then(function (user) {
-            if (!user) {
-                res.redirect('/login');
-            } else if (!user.validPassword(password)) {
-                res.redirect('/login');
-            } else {
-                req.session.user = user.dataValues;
-                res.redirect('/dashboard');
-            }
-        });*/
     });
     app.get('/logout', (req, res) => {
     if (req.session.user && req.cookies.user_sid) {
