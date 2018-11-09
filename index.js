@@ -22,11 +22,18 @@ wss.on('connection', (ws) => {
 
       //log the received message and send it back to the client
       console.log('received: %s', message);
-      ws.send(`Hello, you sent -> ${message}`);
+
+      wss.clients.forEach(client => {
+        if (client != ws) {
+            client.send(message);
+        }    
+    });
   });
 
   //send immediatly a feedback to the incoming connection    
   ws.send('Hi there, I am a WebSocket server');
+
+  
 });
 
 //Routes
@@ -56,7 +63,10 @@ app.get('/getUsers', function (req, res) {
 })
 
 //Starts the server
-app.listen(port, () => console.log(`Example app listening on port ${port}!`))
+//app.listen(port, () => console.log(`Example app listening on port ${port}!`))
+server.listen(port, () => {
+  console.log(`Server started on port ${server.address().port} :)`);
+});
 
 //Function for logging data from requests
 function log(ip, desc) {
