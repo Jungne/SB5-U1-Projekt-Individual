@@ -25,8 +25,9 @@ app.get('/dbtest', function (req, res) {
 
 app.post('/newUser', function (req, res) {
     db.push("/users/" + req.body.username , {"password": req.body.password})
-    res.send("its all good");
+    res.send("Created new user.");
     console.log("Created new user.")
+    log(req.ip, "Created new user: " + req.body.username)
 })
 
 app.get('/getUsers', function (req, res) {
