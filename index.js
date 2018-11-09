@@ -25,14 +25,25 @@ app.get('/dbtest', function (req, res) {
 
 app.post('/newUser', function (req, res) {
     db.push("/users/" + req.body.username , {"password": req.body.password})
-    res.send("its all good");
+    res.send("Created new user.");
     console.log("Created new user.")
+    log(req.ip, "Created new user: " + req.body.username)
 })
 
 app.get('/getUsers', function (req, res) {
   res.send(db.getData("/users"));
   console.log("List of users requested.")
+  log(req.ip, "List of users requested.")
 })
 
 //Starts the server
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
+
+//Function for logging data from requests
+function log(ip, desc) {
+  db.push("/logs[]", {
+    "timestamp": new Date().toISOString().replace(/T/, ' ').replace(/\..+/, ''),
+    "ip": ip,
+    "description": desc
+  })
+}
