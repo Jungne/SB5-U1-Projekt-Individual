@@ -1,0 +1,19 @@
+{
+    "users": {
+        "1234": {
+            "password": "123"
+        },
+        "fefe": {
+            "password": "fe"
+        },
+        "asdf": {
+            "password": "qwer"
+        },
+        "fefef": {
+            "password": "123"
+        },
+        "jungne": {
+            "password": "secret"
+        }
+    }
+}

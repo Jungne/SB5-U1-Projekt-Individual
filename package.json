@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "test": "nodemon -i database.json index.js"
+    "test": "nodemon -i db/userdb.json -i db/logdb.json -i db/chatdb.json index.js"
   },
   "contributors": [
     "Jungne Losang",

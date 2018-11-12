@@ -1,0 +1,49 @@
+{
+    "logs": [
+        {
+            "timestamp": "2018-11-12 14:28:26",
+            "ip": "::1",
+            "description": "New user created: [object Object]"
+        },
+        {
+            "timestamp": "2018-11-12 14:28:53",
+            "ip": "::1",
+            "description": "User: fefe logged in."
+        },
+        {
+            "timestamp": "2018-11-12 14:29:28",
+            "ip": "::1",
+            "description": "User: fefe logged in."
+        },
+        {
+            "timestamp": "2018-11-12 14:29:42",
+            "ip": "::1",
+            "description": "New user created: [object Object]"
+        },
+        {
+            "timestamp": "2018-11-12 14:31:49",
+            "ip": "::1",
+            "description": "New user created: [object Object]"
+        },
+        {
+            "timestamp": "2018-11-12 14:34:38",
+            "ip": "::1",
+            "description": "User: fefe logged in."
+        },
+        {
+            "timestamp": "2018-11-12 14:39:19",
+            "ip": "::1",
+            "description": "New user created: [object Object]"
+        },
+        {
+            "timestamp": "2018-11-12 14:40:03",
+            "ip": "::1",
+            "description": "User: fefe logged in."
+        },
+        {
+            "timestamp": "2018-11-12 14:40:42",
+            "ip": "::1",
+            "description": "New user created: [object Object]"
+        }
+    ]
+}
