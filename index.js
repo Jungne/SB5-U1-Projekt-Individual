@@ -5,8 +5,7 @@ var WebSocket = require("ws")
 var cookieParser = require('cookie-parser');
 var session = require('express-session');
 var bodyParser = require("body-parser")
-var JsonDB = require('node-json-db')
-var db = new JsonDB("database", true, true);
+var db = require("./db/db.js")
 
 const port = process.env.PORT || 5000;
 const server = http.createServer(app);
@@ -47,7 +46,8 @@ wss.on('connection', (ws) => {
 	ws.on('message', (message) => {
 
 		//log the received message and send it back to the client
-		console.log('received: %s', message);
+		db.logChat(message)
+		console.log('Message: %s', message);
 
 		wss.clients.forEach(client => {
 			client.send(message);
@@ -61,27 +61,6 @@ app.get('/index', sessionChecker, (req, res) => {
 	res.sendfile("index.html");
 })
 
-app.get('/hello', sessionChecker, (req, res) => {
-	res.send("hello dudes");
-})
-
-app.get('/dbtest', function (req, res) {
-	res.send(db.getData("/"));
-})
-
-app.post('/newUser', function (req, res) {
-	db.push("/users/" + req.body.username, { "password": req.body.password })
-	res.send("Created new user.");
-	console.log("Created new user.")
-	log(req.ip, "Created new user: " + req.body.username)
-})
-
-app.get('/getUsers', function (req, res) {
-	res.send(db.getData("/users"));
-	console.log("List of users requested.")
-	log(req.ip, "List of users requested.")
-})
-
 app.post('/signin', (req, res) => {
 	let username = req.body.username
 	let password = req.body.password
@@ -90,6 +69,7 @@ app.post('/signin', (req, res) => {
 		if (password == user.password) {
 			req.session.user = JSON.stringify(username)
 			res.send("success")
+
 		}
 		else {
 			res.send("bad password")
@@ -111,16 +91,11 @@ app.get('/logout', (req, res) => {
 
 app.post('/signup', (req, res) => {
 	try {
-		/*
-		* parsen cannot work without variable
-		*from: https://www.npmjs.com/package/node-json-db
-		*/
-		var newuser = {};
+		var newUser = {};
 		var userName = req.body.username
-		newuser[userName] = { "password": req.body.password };
-		console.log(newuser);
-		db.push("/users", newuser, false);
-
+		newUser[userName] = { "password": req.body.password };
+		console.log("New user created: " + userName);
+		db.newUser(req.ip, newUser)
 		req.session.user = JSON.stringify(userName);
 		res.redirect('/chatroom/chatroom.html');
 	}
@@ -132,18 +107,7 @@ app.post('/signup', (req, res) => {
 app.get('/getUserName', (req, res) => {
 	res.send(req.session.user);
 })
-
 //Starts the server
-//app.listen(port, () => console.log(`Example app listening on port ${port}!`))
 server.listen(port, () => {
 	console.log(`Server started on port ${server.address().port} :)`);
 });
-
-//Function for logging data from requests
-function log(ip, desc) {
-	db.push("/logs[]", {
-		"timestamp": new Date().toISOString().replace(/T/, ' ').replace(/\..+/, ''),
-		"ip": ip,
-		"description": desc
-	})
-}
