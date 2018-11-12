@@ -82,31 +82,23 @@ app.get('/getUsers', function (req, res) {
 	log(req.ip, "List of users requested.")
 })
 
-app.route('/signin')
-	.get(function (req, res) {
-		res.sendFile(__dirname + '/public/signin/signin.html');
-	})
-	.post((req, res) => {
-		var username = req.body.username,
-			password = req.body.password;
-		console.log(username + " " + password);
-		try {
-			var user = db.getData("/users/" + username);
-			if (password == user.password) {
-				req.session.user = JSON.stringify(username);
-				res.redirect('/chatroom/chatroom.html');
-			}
-			else {
-				res.redirect('/signin');
-				console.log("Wrong password and/or login. Try again")
-
-			}
+app.post('/signin', (req, res) => {
+	let username = req.body.username
+	let password = req.body.password
+	try {
+		let user = db.getData("/users/" + username)
+		if (password == user.password) {
+			req.session.user = JSON.stringify(username)
+			res.send("success")
 		}
-		catch (error) {
-			res.redirect('/signin');
-			console.log("no redirect. user not found")
+		else {
+			res.send("bad password")
 		}
-	});
+	}
+	catch (error) {
+		res.send("user not found")
+	}
+})
 
 app.get('/logout', (req, res) => {
 	if (req.session.user && req.cookies.user_sid) {

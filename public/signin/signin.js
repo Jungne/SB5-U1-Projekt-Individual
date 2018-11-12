@@ -18,8 +18,10 @@ window.onload = function () {
         Http.setRequestHeader('Content-type', 'application/json;charset=UTF-8')
         Http.send(JSON.stringify(params))
         Http.onreadystatechange = (e) => {
-            //Http.responseText
-            window.location.href = "../chatroom/chatroom.html"
+            console.log(Http.responseText)
+            if (Http.responseText == "success") {
+                window.location.href = "../chatroom/chatroom.html"
+            }
         }
     }
 
