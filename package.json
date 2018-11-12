@@ -20,10 +20,8 @@
     "cookie-parser": "^1.4.3",
     "express": "^4.16.4",
     "node-json-db": "^0.9.1",
-    "ws": "^6.1.0"
-    "express-session": "^1.15.6",
-    "node-json-db": "^0.9.1"
-
+    "ws": "^6.1.0",
+    "express-session": "^1.15.6"
   },
   "engines": {
     "node": "8.9.4"
