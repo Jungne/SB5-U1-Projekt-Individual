@@ -5,12 +5,16 @@ window.onload = function () {
     var messagebox = document.getElementById("messagebox")
     var sendbutton = document.getElementById("sendbutton")
 
+    var userName = "Anonymous"
+
     ws.onopen = function () {
         console.log("connected succesfully");
+        getUserName()
+        .then(data => userName = data)
     };
 
     sendbutton.onclick = function () {
-        ws.send(messagebox.value);
+        ws.send(userName + ": " + messagebox.value);
     }
 
     ws.onmessage = function (evt) {
@@ -18,3 +22,8 @@ window.onload = function () {
     };
 
 };
+
+function getUserName() {
+    return fetch("/getUserName")
+    .then(res => res.json())
+}
