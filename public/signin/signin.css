@@ -1,5 +1,9 @@
-.login-boks-label
+.label
 {
-	width: 200px;
 	margin-left: 2px;
+}
+
+#container-login {
+    margin: auto;
+    width: 200px;
 }
