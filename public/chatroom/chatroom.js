@@ -11,7 +11,6 @@ window.onload = function () {
         console.log("connected succesfully");
         getUserName()
         .then(data => userName = data)
-        console.log(userName)
     };
 
     sendbutton.onclick = function () {

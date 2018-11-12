@@ -122,12 +122,12 @@ app.post('/signup', (req, res) => {
 		*from: https://www.npmjs.com/package/node-json-db
 		*/
 		var newuser = {};
-		newuser[req.body.username] = { "password": req.body.password };
+		var userName = req.body.username
+		newuser[userName] = { "password": req.body.password };
 		console.log(newuser);
 		db.push("/users", newuser, false);
 
-		var user = db.getData("/users/" + req.body.username);
-		req.session.user = JSON.stringify(user);
+		req.session.user = JSON.stringify(userName);
 		res.redirect('/chatroom/chatroom.html');
 	}
 	catch (error) {
