@@ -84,7 +84,7 @@ app.get('/getUsers', function (req, res) {
 
 app.route('/signin')
 	.get(function (req, res) {
-		res.sendFile(__dirname + '/public/signin.html');
+		res.sendFile(__dirname + '/public/signin/signin.html');
 	})
 	.post((req, res) => {
 		var username = req.body.username,
@@ -132,8 +132,7 @@ app.post('/signup', (req, res) => {
 	}
 	catch (error) {
 		console.log(error);
-		res.redirect('/signup.html');
-
+		res.redirect('/signup/signup.html');
 	}
 });
 
