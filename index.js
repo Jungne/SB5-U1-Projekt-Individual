@@ -65,7 +65,7 @@ app.post('/signin', (req, res) => {
 	let username = req.body.username
 	let password = req.body.password
 	try {
-		let user = db.getData("/users/" + username)
+		let user = db.getUser(username)
 		if (password == user.password) {
 			req.session.user = JSON.stringify(username)
 			res.send("success")
@@ -85,7 +85,7 @@ app.get('/logout', (req, res) => {
 		res.clearCookie('user_sid');
 		res.redirect('/');
 	} else {
-		res.redirect('/signin');
+		res.redirect('/signin/signin.html');
 	}
 });
 
@@ -104,9 +104,11 @@ app.post('/signup', (req, res) => {
 		res.redirect('/signup/signup.html');
 	}
 });
+
 app.get('/getUserName', (req, res) => {
 	res.send(req.session.user);
 })
+
 //Starts the server
 server.listen(port, () => {
 	console.log(`Server started on port ${server.address().port} :)`);
