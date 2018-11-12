@@ -116,7 +116,6 @@ app.get('/getUserName', (req, res) => {
 	res.send(req.session.user);
 })
 //Starts the server
-//app.listen(port, () => console.log(`Example app listening on port ${port}!`))
 server.listen(port, () => {
 	console.log(`Server started on port ${server.address().port} :)`);
 });
