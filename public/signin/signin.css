@@ -1,9 +1,23 @@
-.label
-{
+.label {
 	margin-left: 2px;
+    margin-top: 5px;
 }
 
 #container-login {
     margin: auto;
     width: 200px;
+}
+
+#sendbutton {
+    width: 18%;
+    margin-top: 5px;
+    float: right;
+}
+
+#loginbutton {
+    margin-top: 5px;
+}
+
+#cancelbutton {
+    margin-top: 5px;
 }
