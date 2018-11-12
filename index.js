@@ -93,7 +93,7 @@ app.route('/signin')
 		try {
 			var user = db.getData("/users/" + username);
 			if (password == user.password) {
-				req.session.user = JSON.stringify(user);
+				req.session.user = JSON.stringify(username);
 				res.redirect('/chatroom/chatroom.html');
 			}
 			else {
@@ -135,6 +135,9 @@ app.post('/signup', (req, res) => {
 		res.redirect('/signup/signup.html');
 	}
 });
+app.get('/getUserName', (req, res) => {
+	res.send(req.session.user);
+})
 
 //Starts the server
 //app.listen(port, () => console.log(`Example app listening on port ${port}!`))
