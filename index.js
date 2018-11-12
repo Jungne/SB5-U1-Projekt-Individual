@@ -87,6 +87,7 @@ app.route('/signin')
 			console.log("no redirect. user not found")
 		}
 	});
+
 app.get('/logout', (req, res) => {
 	if (req.session.user && req.cookies.user_sid) {
 		res.clearCookie('user_sid');
@@ -95,6 +96,7 @@ app.get('/logout', (req, res) => {
 		res.redirect('/signin');
 	}
 });
+
 app.post('/signup', (req, res) => {
 	try {
 		var newUser = {};

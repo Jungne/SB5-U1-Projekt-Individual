@@ -20,18 +20,19 @@
     </div>
     <div id="container-main">
         <div id="container-login">
-
-            <form action="/signin" method="POST">
-                <br>
+            <br>
+            <div class="form-row">
                 <p class="label">Login:</p>
-                <input type="text" id="login" name="username">
+                <input id="username">
+            </div>
+            <div class="form-row">
                 <p class="label">Password:</p>
-                <input type="text" id="password" name="password">
-                <button type="submit" id="loginbutton">Log in</button>
-                <button id="cancelbutton">Cancel</button>
-                <a href="../index.html">[Cancel]</a>
-            </form>
-
+                <input id="password">
+            </div>
+            <div class="form-row">
+                <button id="login-button">Log in</button>
+                <button id="cancel-button">Cancel</button>
+            </div>
         </div>
     </div>
 </body>
