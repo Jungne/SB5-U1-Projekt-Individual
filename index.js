@@ -28,7 +28,7 @@ app.use(session({
 }));
 app.use((req, res, next) => {
 	if (req.cookies.user_sid && !req.session.user) {
-		res.clearCookie('user_sid');        
+		res.clearCookie('user_sid');
 	}
 	next();
 });
@@ -37,38 +37,31 @@ var sessionChecker = (req, res, next) => {
 		next();
 	} else {
 		return res.redirect('/signin');
-	}    
+	}
 };
 
 //Websocket
 wss.on('connection', (ws) => {
 
-  //connection is up, let's add a simple simple event
-  ws.on('message', (message) => {
+	//connection is up, let's add a simple simple event
+	ws.on('message', (message) => {
 
-      //log the received message and send it back to the client
-      console.log('received: %s', message);
+		//log the received message and send it back to the client
+		console.log('received: %s', message);
 
-      wss.clients.forEach(client => {
-      	if (client != ws) {
-      		client.send(message);
-      	}    
-      });
-  });
-
-  //send immediatly a feedback to the incoming connection    
-  ws.send('Hi there, I am a WebSocket server');
-
-  
+		wss.clients.forEach(client => {
+			client.send(message);
+		});
+	});
 });
 
 //Routes
-app.get('/index', sessionChecker,(req, res) => {
+app.get('/index', sessionChecker, (req, res) => {
 	console.log("index - becase / is taken over by app.user static files");
 	res.sendfile("index.html");
 })
 
-app.get('/hello',sessionChecker, (req, res) => {
+app.get('/hello', sessionChecker, (req, res) => {
 	res.send("hello dudes");
 })
 
@@ -77,7 +70,7 @@ app.get('/dbtest', function (req, res) {
 })
 
 app.post('/newUser', function (req, res) {
-	db.push("/users/" + req.body.username , {"password": req.body.password})
+	db.push("/users/" + req.body.username, { "password": req.body.password })
 	res.send("Created new user.");
 	console.log("Created new user.")
 	log(req.ip, "Created new user: " + req.body.username)
@@ -89,31 +82,30 @@ app.get('/getUsers', function (req, res) {
 	log(req.ip, "List of users requested.")
 })
 app.route('/signin')
-.get(function (req, res) {
-	res.sendFile(__dirname + '/public/signin.html');
-})
-.post((req, res) => {
-	var username = req.body.username,
-	password = req.body.password;
-	console.log(username +" "+ password);
-	try {
-		var user = db.getData("/users/"+ username);
-		if(password == user.password){
-			req.session.user = JSON.stringify(user);
-			res.redirect('/chatroom/chatroom.html');
-		}
-		else{
-			res.redirect('/signin');
-			console.log("Wrong password and/or login. Try again")
+	.get(function (req, res) {
+		res.sendFile(__dirname + '/public/signin.html');
+	})
+	.post((req, res) => {
+		var username = req.body.username,
+			password = req.body.password;
+		console.log(username + " " + password);
+		try {
+			var user = db.getData("/users/" + username);
+			if (password == user.password) {
+				req.session.user = JSON.stringify(user);
+				res.redirect('/chatroom/chatroom.html');
+			}
+			else {
+				res.redirect('/signin');
+				console.log("Wrong password and/or login. Try again")
 
+			}
 		}
-	}
-	catch(error)
-	{
-		res.redirect('/signin');
-		console.log("no redirect. user not found")
-	}
-});
+		catch (error) {
+			res.redirect('/signin');
+			console.log("no redirect. user not found")
+		}
+	});
 app.get('/logout', (req, res) => {
 	if (req.session.user && req.cookies.user_sid) {
 		res.clearCookie('user_sid');
@@ -122,22 +114,22 @@ app.get('/logout', (req, res) => {
 		res.redirect('/signin');
 	}
 });
-app.post('/signup',(req, res)=>{
-	try{
+app.post('/signup', (req, res) => {
+	try {
 		/*
 		* parsen cannot work without variable
 		*from: https://www.npmjs.com/package/node-json-db
 		*/
 		var newuser = {};
-		newuser[req.body.username] = {"password": req.body.password};
+		newuser[req.body.username] = { "password": req.body.password };
 		console.log(newuser);
-		db.push("/users", newuser,false);
-		
-		var user = db.getData("/users/"+ req.body.username);
+		db.push("/users", newuser, false);
+
+		var user = db.getData("/users/" + req.body.username);
 		req.session.user = JSON.stringify(user);
 		res.redirect('/chatroom/chatroom.html');
 	}
-	catch(error){
+	catch (error) {
 		console.log(error);
 		res.redirect('/signup.html');
 

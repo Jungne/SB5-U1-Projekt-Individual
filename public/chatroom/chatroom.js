@@ -1,12 +1,20 @@
 window.onload = function () {
     var ws = new WebSocket("ws://localhost:5000");
 
+    var textarea = document.getElementById("textarea")
+    var messagebox = document.getElementById("messagebox")
+    var sendbutton = document.getElementById("sendbutton")
+
     ws.onopen = function () {
         console.log("connected succesfully");
-        ws.send("Hello server! - client");
     };
 
+    sendbutton.onclick = function () {
+        ws.send(messagebox.value);
+    }
+
     ws.onmessage = function (evt) {
-        console.log(evt.data);
+        textarea.value += evt.data + "\n";
     };
+
 };
