@@ -1,5 +1,5 @@
 window.onload = function () {
-    var ws = new WebSocket("ws://" + window.location.host);
+    var ws = new WebSocket("ws://" + location.host);
 
     var textarea = document.getElementById("textarea")
     var messagebox = document.getElementById("messagebox")
