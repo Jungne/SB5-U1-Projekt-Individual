@@ -20,7 +20,7 @@ window.onload = function () {
         Http.onreadystatechange = (e) => {
             console.log(Http.responseText)
             if (Http.responseText == "success") {
-                window.location.href = "../chatroom/chatroom.html"
+                window.location.href = "../chatroom"
             }
         }
     }

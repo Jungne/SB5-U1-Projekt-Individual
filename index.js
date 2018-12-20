@@ -6,6 +6,7 @@ var cookieParser = require('cookie-parser');
 var session = require('express-session');
 var bodyParser = require("body-parser")
 var db = require("./db/db.js")
+const bcrypt = require("bcrypt")
 
 const port = process.env.PORT || 5000;
 const server = http.createServer(app);
@@ -35,7 +36,7 @@ var sessionChecker = (req, res, next) => {
 	if (req.session.user && req.cookies.user_sid) {
 		next();
 	} else {
-		return res.redirect('/signin');
+		return res.redirect('/signin/signin.html');
 	}
 };
 
@@ -58,7 +59,7 @@ wss.on('connection', (ws) => {
 //Routes
 app.get('/index', sessionChecker, (req, res) => {
 	console.log("index - becase / is taken over by app.user static files");
-	res.sendfile("index.html");
+	res.sendFile("index.html");
 })
 
 app.post('/signin', (req, res) => {
@@ -93,11 +94,19 @@ app.post('/signup', (req, res) => {
 	try {
 		var newUser = {};
 		var userName = req.body.username
-		newUser[userName] = { "password": req.body.password };
+		var password = req.body.password
+
+		bcrypt.genSalt(10, function(err, salt) {
+			bcrypt.hash(password, salt, function(err, hash) {
+				console.log(hash)
+				newUser[userName] = {"password": hash}
+				db.newUser(req.ip, newUser)
+			});
+		});
+
 		console.log("New user created: " + userName);
-		db.newUser(req.ip, newUser)
 		req.session.user = JSON.stringify(userName);
-		res.redirect('/chatroom/chatroom.html');
+		res.redirect('/chatroom');
 	}
 	catch (error) {
 		console.log(error);
@@ -107,6 +116,10 @@ app.post('/signup', (req, res) => {
 
 app.get('/getUserName', (req, res) => {
 	res.send(req.session.user);
+})
+
+app.get('/chatroom', sessionChecker, (req, res) => {
+	res.sendfile("html/chatroom.html");
 })
 
 //Starts the server
