@@ -6,7 +6,7 @@ var cookieParser = require('cookie-parser');
 var session = require('express-session');
 var bodyParser = require("body-parser")
 var db = require("./db/db.js")
-const bcrypt = require("bcrypt")
+const bcrypt = require("bcryptjs")
 
 const port = process.env.PORT || 5000;
 const server = http.createServer(app);
@@ -42,14 +42,12 @@ var sessionChecker = (req, res, next) => {
 
 //Websocket
 wss.on('connection', (ws) => {
-
-	//connection is up, let's add a simple simple event
 	ws.on('message', (message) => {
-
-		//log the received message and send it back to the client
+		//logs the received message
 		db.logChat(message)
 		console.log('Message: %s', message);
 
+		//sends the message to all connected clients
 		wss.clients.forEach(client => {
 			client.send(message);
 		});
@@ -67,14 +65,18 @@ app.post('/signin', (req, res) => {
 	let password = req.body.password
 	try {
 		let user = db.getUser(username)
-		if (password == user.password) {
-			req.session.user = JSON.stringify(username)
-			res.send("success")
 
-		}
-		else {
-			res.send("bad password")
-		}
+		bcrypt.compare(password, user.password, function(err, pwres) {
+			if (pwres == true) {
+				req.session.user = JSON.stringify(username)
+				res.send("success")
+			}
+			else {
+				res.send("bad password")
+			}
+		});
+
+		
 	}
 	catch (error) {
 		res.send("user not found")
