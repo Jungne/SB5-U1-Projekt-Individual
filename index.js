@@ -44,6 +44,9 @@ var sessionChecker = (req, res, next) => {
 //Websocket
 wss.on('connection', (ws) => {
 	ws.on('message', (message) => {
+		//sanitize the input
+		message = validator.escape(message)
+
 		//logs the received message
 		db.logChat(message)
 		console.log('Message: %s', message);
@@ -64,23 +67,27 @@ app.get('/index', sessionChecker, (req, res) => {
 app.post('/signin', (req, res) => {
 	let username = req.body.username
 	let password = req.body.password
-	try {
-		let user = db.getUser(username)
 
-		bcrypt.compare(password, user.password, function(err, pwres) {
-			if (pwres == true) {
-				req.session.user = JSON.stringify(username)
-				res.send("success")
-			}
-			else {
-				res.send("bad password")
-			}
-		});
+	if (validator.isAlphanumeric(username, ['da-DK']) && validator.isLength(password, { min: 5 })) {
+		try {
+			let user = db.getUser(username)
 
-		
-	}
-	catch (error) {
-		res.send("user not found")
+			bcrypt.compare(password, user.password, function(err, pwres) {
+				if (pwres == true) {
+					req.session.user = JSON.stringify(username)
+					res.send("success")
+				}
+				else {
+					res.send("bad password")
+				}
+			});			
+		}
+		catch (error) {
+			res.send("user not found")
+		}
+	}	
+	else {
+		res.send("username or password rejected")
 	}
 })
 
@@ -94,25 +101,31 @@ app.get('/logout', (req, res) => {
 });
 
 app.post('/signup', (req, res) => {
-	try {
-		var newUser = {};
-		var userName = req.body.username
-		var password = req.body.password
+	var newUser = {};
+	var userName = req.body.username
+	var password = req.body.password
 
-		bcrypt.genSalt(10, function(err, salt) {
-			bcrypt.hash(password, salt, function(err, hash) {
-				newUser[userName] = {"password": hash}
-				db.newUser(req.ip, newUser)
+	if (validator.isAlphanumeric(userName, ['da-DK']) && validator.isLength(password, { min: 5 })) {
+		try {
+
+			bcrypt.genSalt(10, function(err, salt) {
+				bcrypt.hash(password, salt, function(err, hash) {
+					newUser[userName] = {"password": hash}
+					db.newUser(req.ip, newUser)
+				});
 			});
-		});
 
-		console.log("New user created: " + userName);
-		req.session.user = JSON.stringify(userName);
-		res.redirect('/chatroom');
+			console.log("New user created: " + userName);
+			req.session.user = JSON.stringify(userName);
+			res.redirect('/chatroom');
+		}
+		catch (error) {
+			console.log(error);
+			res.redirect('/signup/signup.html');
+		}
 	}
-	catch (error) {
-		console.log(error);
-		res.redirect('/signup/signup.html');
+	else {
+		res.send("username or password rejected")
 	}
 });
 
