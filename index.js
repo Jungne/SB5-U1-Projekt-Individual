@@ -1,12 +1,13 @@
-var express = require("express")
-var app = express()
-var http = require("http")
-var WebSocket = require("ws")
-var cookieParser = require('cookie-parser');
-var session = require('express-session');
-var bodyParser = require("body-parser")
-var db = require("./db/db.js")
+const express = require("express")
+const app = express()
+const http = require("http")
+const WebSocket = require("ws")
+const cookieParser = require('cookie-parser');
+const session = require('express-session');
+const bodyParser = require("body-parser")
+const db = require("./db/db.js")
 const bcrypt = require("bcryptjs")
+const validator = require("validator")
 
 const port = process.env.PORT || 5000;
 const server = http.createServer(app);
@@ -100,7 +101,6 @@ app.post('/signup', (req, res) => {
 
 		bcrypt.genSalt(10, function(err, salt) {
 			bcrypt.hash(password, salt, function(err, hash) {
-				console.log(hash)
 				newUser[userName] = {"password": hash}
 				db.newUser(req.ip, newUser)
 			});
